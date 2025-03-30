@@ -1,4 +1,12 @@
+/* arquivo JFlex para o analisador léxico da linguagem C-- */
+
 %%
+
+%class Yylex
+%unicode
+%line
+%column
+%public
 
 %{
   private AsdrSample yyparser;
@@ -7,40 +15,43 @@
     this(r);
     this.yyparser = yyparser;
   }
-
-
-%} 
+%}
 
 %integer
-%line
-%char
 
-WHITE_SPACE_CHAR=[\n\r\ \t\b\012]
+WHITE_SPACE_CHAR = [ \t\n\r\f]+
+IDENTIFIER       = [:jletter:][:jletterdigit:]*
+NUMBER           = [0-9]+(\.[0-9]+)?
 
 %%
 
 "$TRACE_ON"   { yyparser.setDebug(true); }
 "$TRACE_OFF"  { yyparser.setDebug(false); }
 
-"while"	 	{ return AsdrSample.WHILE; }
-"if"		{ return AsdrSample.IF; }
-"else"		{ return AsdrSample.ELSE; }
-"fi"		{ return AsdrSample.FI; }
+"func"       { return AsdrSample.FUNC; }
+"int"        { return AsdrSample.INT; }
+"double"     { return AsdrSample.DOUBLE; }
+"boolean"    { return AsdrSample.BOOLEAN; }
+"void"       { return AsdrSample.VOID; }
+"while"      { return AsdrSample.WHILE; }
+"if"         { return AsdrSample.IF; }
+"else"       { return AsdrSample.ELSE; }
 
-[:jletter:][:jletterdigit:]* { return AsdrSample.IDENT; }  
+{IDENTIFIER}  { return AsdrSample.IDENT; }
+{NUMBER}      { return AsdrSample.NUM; }
 
-[0-9]+ 	{ return AsdrSample.NUM; }
+"{"          { return '{'; }
+"}"          { return '}'; }
+";"          { return ';'; }
+"("          { return '('; }
+")"          { return ')'; }
+","          { return ','; }
+"+"          { return '+'; }
+"-"          { return '-'; }
+"*"          { return '*'; }
+"/"          { return '/'; }
+"="          { return '='; }
 
-"{" |
-"}" |
-";" |
-"(" |
-")" |
-"+" |
-"-" |
-"="    	{ return yytext().charAt(0); } 
+{WHITE_SPACE_CHAR} { /* ignora espaços em branco */ }
 
-
-{WHITE_SPACE_CHAR}+ { }
-
-. { System.out.println("Erro lexico: caracter invalido: <" + yytext() + ">"); }
+.            { System.err.println("Erro léxico: caractere inválido '" + yytext() + "' na linha " + yyline); }
