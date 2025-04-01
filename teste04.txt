@@ -1,9 +1,0 @@
-$TRACE_ON
-
-
-    { while (b) 
-         if (c)
-            a= 34; 
-    }
-   
-

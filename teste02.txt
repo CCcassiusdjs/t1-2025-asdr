@@ -1,4 +1,9 @@
 $TRACE_ON
-    { a = ((( 34 ))); }
+int i;
+boolean b;
 
-
+func void main() {
+    i = 0;
+    i = i + 2;
+    i = 2 * i;
+}

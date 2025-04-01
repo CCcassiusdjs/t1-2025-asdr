@@ -1,13 +1,11 @@
 $TRACE_ON
+int i;
+boolean b;
 
-    { while (b) 
-        if (c) {
-            {
-                while( true )
-                    if (a)  b=1; else b=7; 
-            }
-        } 
-        
+func void main(int a, int c) {
+    i = a + c;
+    i = c * i + 3
+    if (b) {
+        i = i / 3;
     }
-
-
+}

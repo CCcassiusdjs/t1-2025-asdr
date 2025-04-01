@@ -1,3 +1,4 @@
+/* Alunos Ana Carolina Xavier, Cássio Dhein e Érico Bis */
 /* arquivo JFlex para o analisador léxico da linguagem C-- */
 
 %%
